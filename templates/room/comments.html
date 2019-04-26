@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Комментарии</h1>
+    <div class="bs-callout bs-callout-info">
+      <h4>Информация</h4>
+      Комментарии, как и возможные клиенты, появятся после проверки источников!
+    </div>
+    <div class="container">
+    <div class="container">
+    <div class="container">
+    <div class="container">
+    <div class="container">
+        <div class="row tac">
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="col-md-12 card" id="{{ comment.group.group_id }}-{{ comment.uid }}">
+                        <div class="card-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="cl-comments col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                        <a href="https://vk.com/id{{ comment.uid }}" target="_blank">
+                                            <img class="img-rounded-vk" src="{{ comment.photo }}" alt="Client Photo">
+                                            <p class="card-groups {% if comment.visited %}visited-client{% else %} text-black-50{% endif %}" data-for-search="{{ comment.id }}">{{ comment.fname }} {{ comment.lname }}</p>
+                                        </a>
+                                    </div>
+                                    <div class="cl-comments col-lg-3 col-md-12 col-sm-12 col-xs-12 d-flex align-items-center">
+                                        <span class="card-groups text-black-50 small">Текст: {{ comment.text }}</span>
+                                    </div>
+                                    <div class="cl-comments col-lg-3 col-md-6 col-sm-6 col-xs-12 d-flex align-items-center">
+                                        <a href="https://vk.com/club{{ comment.group.group_id }}" class="small" target="_blank">
+                                            <span>Группа: {{ comment.group.title }}</span>
+                                        </a>
+                                    </div>
+                                    <div class="cl-comments cl-comments-btn-delete col-lg-3 col-md-6 col-sm-6 col-xs-12 d-flex align-items-center">
+                                    <div class="row">
+                                    <div class="col-md-12">
+                                        <a class="btn btn-info m-auto client-cl-btns-mg client-cl-btn copy-to-buffer-text {% if comment.visited %}{% else %}visit_comment{% endif %}" data-cid="{{ comment.id }}" href="https://vk.com/im?sel={{ comment.uid }}" data-text-copy="{{ comment.id }}" target="_blank">Перейти к диалогу<br>и скопировать текст</a>
+                                    </div>
+                                    <div class="col-md-12">
+                                        {% if comment.selected %}
+                                            <a class="btn btn-dark client-cl-btn select_comment select_comment" data-cid="{{ comment.id }}">Выбрано</a>
+                                        {% else %}
+                                            <a class="btn btn-primary client-cl-btn select_comment select_comment" data-cid="{{ comment.id }}">Выбрать</a>
+                                        {% endif %}
+                                        <a class="btn btn-danger comment-cl-btn-danger delete_client delete_comment" data-cid="{{ comment.id }}" data-uid="{{ comment.uid }}" data-gid="{{ comment.group.group_id }}">Удалить</a>
+                                    </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                                <div class="container">
+                <div class="row">
+                                        <div class="table-responsive">
+                                  <table class="table table-pagination">
+                                      <td>
+                                        <div class="pagin-div large-3 large-offset-5 columns">
+                                            <ul class="pagination">
+                                            <div class="pagination-div">
+                                                {% if comments.has_previous %}
+                                                <li class="page-item arrow"><a class="page-link" href="{% url 'room_comments' page_num=comments.previous_page_number %}">&laquo;</a></li>
+                                                {% else %}
+                                                <li class="page-item arrow disabled"><a class="page-link" href="">&laquo;</a></li>
+                                                {% endif %}
+                                                {% for page in comments.paginator.page_range %}
+                                                {% if page == comments.number %}
+                                                <li class="page-item active"><a class="page-link" href="{% url 'room_comments' page_num=page%}">{{ page }}</a></li>
+                                                {% else %}
+                                                <li class="page-item"><a class="page-link" href="{% url 'room_comments' page_num=page %}">{{ page }}</a></li>
+                                                {% endif %}
+                                                {% endfor %}
+                                                {% if comments.has_next %}
+                                                <li class="page-item arrow"><a class="page-link" href="{% url 'room_comments' page_num=comments.next_page_number %}">&raquo;</a></li>
+                                                {% else %}
+                                                <li class="page-item arrow disabled"><a class="page-link" href="">&raquo;</a></li>
+                                                {% endif %}
+                                            </div>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </table>
+                            </div>
+    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-warning mx-auto not-found-room" role="alert">
+                    <h2>Комментариев не найдено</h2>
+                    <p>Ожидайте проверки источников</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+                    </div>
+                    </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--TEXTS-->
+<div class="texts" style="height: 1px;color: transparent;cursor: default;">
+    {% for text in texts %}
+        <span id="{{ text.id }}">{{ text.msg }}</span>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'main_static/js/delete_comment.js' %}"></script>
+    <script src="{% static 'main_static/js/select_comment.js' %}"></script>
+    <script src="{% static 'main_static/js/visit_comment.js' %}"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+function CopyToClipboard(containerid) {
+    try {
+        // современный объект Selection
+        window.getSelection().removeAllRanges();
+    } catch (e) {
+        document.selection.empty();
+    }
+    if (document.selection) {
+        var range = document.body.createTextRange();
+        range.moveToElementText(document.getElementById(containerid));
+        range.select().createTextRange();
+        document.execCommand("Copy");
+    } else if (window.getSelection) {
+        var range = document.createRange();
+         range.selectNode(document.getElementById(containerid));
+         window.getSelection().addRange(range);
+         document.execCommand("Copy");
+}}
+
+$('.copy-to-buffer-text').click(function () {
+    CopyToClipboard($(this).attr("data-text-copy"));
+});
+
+
+</script>
+{% endblock %}

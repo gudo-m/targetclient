@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Регистрация</h1>
+    <div class="form-inside container">
+        <form action="" method="post">
+            {% csrf_token %}
+            <p><label>Логин</label></p>
+            <input class="form-control" name="login" type="text" placeholder="Логин" required>
+            <p><label>Почта</label></p>
+            <input class="form-control"  name="email" type="text" placeholder="Email" required>
+            <p><label>Пароль</label></p>
+            <input class="form-control"  name="password" type="password" placeholder="Пароль" required>
+            <p><label>Подтверждение пароля</label></p>
+            <input class="form-control"  name="password2" type="password" placeholder="Повторите пароль" required>
+            <input class="btn btn-primary" type="submit">
+        </form>
+    </div>
+    <p class="mt-5">Уже зарегистрированы? <a href="{% url 'login' %}">Войти</a></p>
+{% endblock %}

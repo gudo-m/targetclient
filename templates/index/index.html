@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section id="first-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 tac">
+				<h1><span class="logo-red">Target</span>Client</h1>
+			</div>
+			<div class="col-md-12">
+				<h4 class="float-left">Мы ищем для Вас <span class="logo-red">клиентов</span><br>Без предоплаты<br>Без рекламы</h4>
+			</div>
+			<div class="col-md-12 tac">
+				<p>Эффективный инструмент поиска клиентов для предпринимателей, маркетологов, менеджеров по продажам, web-мастеров, специалистов всех направлений бизнеса, предлагающих свои услуги в социальных сетях. </p>
+			</div>
+			<div class="col-md-12 tac">
+				<a class="button btn btn-danger" href="{% url 'using_request' %}">Попробовать бесплатно</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<section id="second-section">
+	<h2>Как работает поиск клиентов в <span class="logo-red">Target</span>Client</h2>
+	<div class="container">
+		<div class="row">
+
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="card">
+					<img src="{% static 'main_static/img/2.png' %}" alt="Card" class="card-img-top">
+					<div class="card-body"><p>1. Пользователь интересуется товаром или услугой аналогичной вашей и вступает в группу конкурента или оставляет в ней свой комментарий</p></div>
+				</div>
+			</div>
+
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="card">
+					<img src="{% static 'main_static/img/3.png' %}" alt="Card" class="card-img-top">
+					<div class="card-body"><p>2. Наша система просматривает группы Ваших конкурентов, Вы получаете информацию о потенциальных клиентах в личные сообщения, чтобы оперативно им сделать своё лучшее предложение в один клик</p></div>
+				</div>
+			</div>
+
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="card">
+					<img src="{% static 'main_static/img/4.png' %}" alt="Card" class="card-img-top">
+					<div class="card-body"><p>3. Пользователи любят вооружаться выбором, а значит, потенциально открыты к аналогичным предложениям интересующих их услуг или товаров</p></div>
+				</div>
+			</div>
+
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="card">
+					<img src="{% static 'main_static/img/5.png' %}" alt="Card" class="card-img-top">
+					<div class="card-body"><p>4. Вы получаете клиентов, которые сами ищут то, что Вы продаете! А Ваши конкуренты станут Вашими менеджерами по привлечению клиентов</p></div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+
+
+<section id="third-section">
+	<h2><span class="logo-red">Target</span>Client - это</h2>
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-4">
+				<img src="{% static 'main_static/img/6.png' %}" alt="Card" class="card-img-top">
+				<div class="card1-body"><p>1. Пользователь интересуется товаром или услугой аналогичной вашей и вступает в группу конкурента или оставляет в ней свой комментарий</p></div>
+			</div>
+
+			<div class="col-md-4">
+				<img src="{% static 'main_static/img/7.png' %}" alt="Card" class="card-img-top">
+				<div class="card1-body"><p>2. Наша система просматривает группы Ваших конкурентов, Вы получаете информацию о потенциальных клиентах в личные сообщения, чтобы оперативно им сделать своё лучшее предложение в один клик</p></div>
+			</div>
+
+			<div class="col-md-4">
+				<img src="{% static 'main_static/img/8.png' %}" alt="Card" class="card-img-top">
+				<div class="card1-body"><p>3. Пользователи любят вооружаться выбором, а значит, потенциально открыты к аналогичным предложениям интересующих их услуг или товаров</p></div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+
+
+<section id="fifty-section">
+		<h2>Удобно, удобно и ещё раз удобно!</h2>
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-4">
+				<img src="{% static 'main_static/img/9.png' %}" alt="Card" class="card-img-top">
+				<div class="card1-body"><p><b>Скорость</b><br>Вам не нужно тратить время на страницах сервиса в ожидании новых потенциальных клиентов, система проверяет новых пользователей отдельно от вас.</p></div>
+			</div>
+
+			<div class="col-md-4">
+				<img src="{% static 'main_static/img/10.png' %}" alt="Card" class="card-img-top">
+				<div class="card1-body"><p><b>Шаблон сообщения</b><br>При переходе на страницу пользователя в памяти Вашего компьютера уже будет готовое сообщение, Вам остается только вставить и отправить его(такие сообщения содержат имя пользователя, информацию о нём и текст предложения, который можно отредактировать в настройках).</p></div>
+			</div>
+
+			<div class="col-md-4">
+				<img src="{% static 'main_static/img/11.png' %}" alt="Card" class="card-img-top">
+				<div class="card1-body"><p><b>Закладки пользователей</b><br>Это система управления отношениями с клиентами (CRM) позволит Вам помечать различными метками пользователей в зависимости от того, на каком этапе диалога Ваша сделка. К примеру, пометить пользователя, который попросил написать ему позже или позвонить.</p></div>
+			</div>
+
+		</div>
+
+				<div class="row">
+
+			<div class="col-md-4">
+				<img src="{% static 'main_static/img/12.png' %}" alt="Card" class="card-img-top">
+				<div class="card1-body"><p><b>Отслеживание вступивших</b><br>Наша система будет проверять новых вступивших в группы Ваших конкурентов, что позволит оперативно реагировать и делать свои выгодные предложения.</p></div>
+			</div>
+
+			<div class="col-md-4">
+				<img src="{% static 'main_static/img/13.png' %}" alt="Card" class="card-img-top">
+				<div class="card1-body"><p><b>Сканер комментариев</b><br>Инструмент отображает информацию о новых комментариях оставленных пользователями в группах конкурентов в разделах обсуждения или к целым фотоальбомам.</p></div>
+			</div>
+
+			<div class="col-md-4">
+				<img src="{% static 'main_static/img/14.png' %}" alt="Card" class="card-img-top">
+				<div class="card1-body"><p><b>Фильтры + АнтиБот</b><br>Наши фильтры помогут Вам гибко настроить отображаемую новую аудиторию, а система АнтиБот огородит Вас от общения с фейковыми аккаунтами если Ваши конкуренты накручивают подписчиков.</p></div>
+			</div>
+
+            <div class="col-md-12 tac">
+				<a class="button btn btn-danger" href="{% url 'using_request' %}">Попробовать бесплатно</a>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
+{% block js %}
+
+{% endblock %}

@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Рассылка сообщений по возможным клиентам</h1>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">
+        Настроить рассылку
+    </button>
+    <div class="bs-callout bs-callout-info">
+      <h4>Информация</h4>
+      После добавления источников и их проверки, вам потребуется разослать всем возможным клиентам сообщения, автоматизируйте этот процесс!
+        <p>Добавите информацию о вашем фейковом аккаунте вконтакте, отредактируйте текст и начните рассылку.</p>
+    </div>
+     <div class="bs-callout bs-callout-danger">
+      <h4>Внимание!</h4>
+      Есть небольшая вероятность, что некоторые аккаунты вконтакте заблокируют. Чем больше аккаунтов вы добавите - тем меньше вероятность блокировки. Все сообщения мы сохраним, но будьте осторожны:
+     <p>Лучше не добавлять свой основной аккаунт!</p>
+    </div>
+<!--
+
+{#
+        <div class="container">
+            <div class="row tac">
+                {% for vk_account in vk_accounts %}
+                    {% if not vk_account %}
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 card card-m-b card-m">
+                            <h5 class="card-header text-muted">Аккаунт не задан</h5>
+                            <div class="card-body">
+                                <a class="btn btn-primary" id="add_account_body" data-toggle="modal" data-target="#exampleModal">Добавить</a>
+                            </div>
+                         </div>
+                    {% else %}
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 card card-m-b card-m">
+                            <h5 class="card-header text-muted">{{ vk_account.fname }} {{ vk_account.lname }}</h5>
+                            <div class="card-body card-body-add-account">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <a href="https://vk.com/id{{ vk_account.aid }}" target="_blank">
+                                                <img src="{{ vk_account.photo }}" alt="VkAccount Photo" class="img-rounded-vk">
+                                                <p class="card-groups text-black-50 text-muted">{{ vk_account.fname }} {{ vk_account.lname }}</p>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 col-xs-12 info-accounts-vk">
+                                            <p class="card-groups text-black-50">Кол-во отправленных сообщений: {{ vk_account.num_messages }}</p>
+                                            <br>
+                                            <p class="card-groups text-black-50">Заблокирован: {% if vk_account.blocked %}Да{% else %}Нет{% endif %}</p>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <button class="btn btn-danger delete_client delete_vk_account" data-uid="{{ vk_account.id }}">Удалить</button>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <a class="btn btn-info dialog-vk-account" href="{% url 'room_dialogs' vk_acc_id=vk_account.id %}">Посмотреть диалоги</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+        </div>
+    </div>
+#}
+-->
+    <div class="container">
+        <h2>На разработке!!!</h2>
+    </div>
+    <div class="bs-callout bs-callout-primary">
+        Количество аккаунтов, поддерживаемых вашим тарифом: {{ user.settings.permission.max_vk_accounts }}.
+    </div>
+
+
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавить аккаунт</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="text-black-50">Введите информацию об аккаунте:</p>
+          <form action="" class="form-add-account">
+              <label class="float-left">Логин</label>
+              <input id="add_logn" class="form-control" type="text" required>
+              <label class="float-left">Пароль</label>
+              <input id="add_passwd" class="form-control" type="password" required>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-primary" id="add_account">Добавить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Modal 2 -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Настроить и запустить рассылку</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="input-group mb-3 input-spam">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Кому рассылать?</label>
+              </div>
+              <select class="custom-select" id="inputGroupSelect01">
+                <option value="1" {% if user.settings.spam_selected_option == '1' %}selected{% endif %}>Всем возможным клиентам</option>
+                <option value="2" {% if user.settings.spam_selected_option == '2' %}selected{% endif %}>Всем возможным клиентам и пользователям со страницы комментариев</option>
+                <option value="3" {% if user.settings.spam_selected_option == '3' %}selected{% endif %}>Только пользователям со страницы комментариев</option>
+                <option value="4" {% if user.settings.spam_selected_option == '4' %}selected{% endif %}>Возможным клиентам, которые выбраны на странице возможных клиентов</option>
+                <option value="5" {% if user.settings.spam_selected_option == '5' %}selected{% endif %}>Только пользователям со страницы комментариев, которые выбраны</option>
+                <option value="6" {% if user.settings.spam_selected_option == '6' %}selected{% endif %}>Выбранным возможным клиентам и выбранным пользователям со страницы комментариев</option>
+              </select>
+          </div>
+          <div class="input-spam m-5">
+              <label>Текст сообщений</label>
+              <textarea type="text" class="form-control form-spam" id="text_message" rows="10" required>{{ user.settings.spam_text }}</textarea>
+          <p class="text-black-50 align-left instruct"><b>Инструкция:</b> в тексте сообщения используйте следующие вставки:<br>1. <span class="badge badge-secondary"><фамилия></span> - подставляется фамилия пользователя, которому отправляется сообщение<br>2. <span class="badge badge-secondary"><имя></span> - подставляется имя пользователя, которому отправляется сообщение<br>3. <span class="badge badge-secondary"><группа></span> - подставляется название группы в которую вступил клиент/в которой написан комментарий <br>Вставки можно использовать несколько раз.</p>
+          </div>
+
+
+            <div class="input-spam m-5">
+                <label>Интервал между сообщениями, минут</label>
+                <div class="container m-auto">
+                    <a onclick="fun7()" id="b1" class="btn btn-primary m-1 btn-spam-act">Заданный интервал</a><a onclick="fun8()" id="b2" class="btn btn-primary m-1 btn-spam-act">Интервал в диапозоне</a>
+                </div>
+                <div id="getted" class="d-none">
+                    <div class="diap">
+                        <input type="range" class="form-control-range form-spam-range" id="r1" oninput="fun1()" value="{{ user.settings.spam_ranged }}" min=1 max=60>
+                        <input type="text" class="form-control small-input form-spam-range-input" id="i1" onchange="fun2()" value="{{ user.settings.spam_ranged }}" onfocus="fun2()" onkeypress="fun2()" onkeydown="fun2()" onmousemove="fun2()" onkeyup="fun2()">
+                    </div>
+                    <div class="desc">
+                        <p class="text-black-50 align-left instruct">Перед каждым сообщением будет делаться перерыв на столько минут. Минимальное значение - 1 минута.</p>
+                    </div>
+                </div>
+                <div id="diap" class="d-none">
+                    <label>От:</label>
+                    <div class="diap">
+                        <input type="range" class="form-control-range form-spam-range" id="r2" oninput="fun3()" value="{{ user.settings.spam_ranged_from }}" min=1 max=59>
+                        <input type="text" class="form-control small-input form-spam-range-input" id="i2" onchange="fun4()" value="{{ user.settings.spam_ranged_from }}" onfocus="fun4()" onkeypress="fun4()" onkeydown="fun4()" onmousemove="fun4()" onkeyup="fun4()">
+                    </div>
+                    <label>До (включительно):</label>
+                    <div class="diap">
+                        <input type="range" class="form-control-range form-spam-range" id="r3" oninput="fun5()" value="{{ user.settings.spam_ranged_to }}" min=2 max=60>
+                        <input type="text" class="form-control small-input form-spam-range-input" id="i3" onchange="fun6()" value="{{ user.settings.spam_ranged_to }}" onfocus="fun6()" onkeypress="fun6()" onkeydown="fun6()" onmousemove="fun6()" onkeyup="fun6()">
+                    </div>
+                    <div class="desc">
+                        <p class="text-black-50 align-left instruct">Перед каждым сообщением из данного диапазона случайно будет выбираться число. На столько минут будет делаться перерыв. Минимальное значение - 1 минута.</p>
+                    </div>
+                </div>
+                <div class="m-5">
+                    <label>Рассылать сообщения тем, кому рассылались до этого?</label>
+                    <input type="checkbox" class="checkbox-row" id="spam_last" required {% if user.settings.spam_last %}checked{% endif %}>
+                </div>
+                <div class="flag" id="flag" data-now-active="{{ user.settings.spam_ranged_or_diap }}"></div>
+            </div>
+          </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-primary" id="start_spam">Запустить</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'main_static/js/add_vk_account.js' %}"></script>
+    <script src="{% static 'main_static/js/delete_vk_account.js' %}"></script>
+    <script src="{% static 'main_static/js/spam.js' %}"></script>
+    <script>
+        {% if user.settings.spam_ranged_or_diap == '1' %}
+        fun7();
+        {% else %}
+        fun8();
+        {% endif %}
+        fun3();
+    function fun1() {
+	 var rng=document.getElementById('r1'); //rng - это ползунок
+   var i1=document.getElementById('i1'); // i1 - input
+	i1.value=rng.value;
+}
+function fun2() {
+	 var rng=document.getElementById('r1'); //rng - это ползунок
+   var i1=document.getElementById('i1'); // i1 - input
+	rng.value=i1.value;
+}
+function fun3() {
+	 var rng=document.getElementById('r2'); //rng - это ползунок
+    var rng1=document.getElementById('r3'); //rng - это ползунок
+   var i2=document.getElementById('i2'); // i1 - input
+    rng1.setAttribute('min', String(Number(rng.value)+1));
+    fun5();
+	i2.value=rng.value;
+}
+function fun4() {
+	 var rng=document.getElementById('r2'); //rng - это ползунок
+   var i2=document.getElementById('i2'); // i1 - input
+	rng.value=i2.value;
+}
+function fun5() {
+	 var rng=document.getElementById('r3'); //rng - это ползунок
+   var i3=document.getElementById('i3'); // i1 - input
+	i3.value=rng.value;
+}
+function fun6() {
+	 var rng=document.getElementById('r3'); //rng - это ползунок
+   var i3=document.getElementById('i3'); // i1 - input
+	rng.value=i3.value;
+}
+function fun7() {
+    var getted = document.getElementById('getted');
+    var diap = document.getElementById('diap');
+    var b1 = document.getElementById('b1');
+    var b2 = document.getElementById('b2');
+    var flag = document.getElementById('flag');
+    flag.setAttribute('data-now-active', '1');
+    getted.classList.add('d-none');
+    diap.classList.add('d-none');
+    getted.classList.remove('d-none');
+    b1.classList.remove('btn-primary');
+    b1.classList.add('btn-dark');
+    b2.classList.add('btn-primary');
+    b2.classList.remove('btn-dark');
+}
+function fun8() {
+    var getted = document.getElementById('getted');
+    var diap = document.getElementById('diap');
+    var b1 = document.getElementById('b1');
+    var b2 = document.getElementById('b2');
+    var flag = document.getElementById('flag');
+    flag.setAttribute('data-now-active', '2');
+    getted.classList.add('d-none');
+    diap.classList.add('d-none');
+    diap.classList.remove('d-none');
+    b2.classList.remove('btn-primary');
+    b2.classList.add('btn-dark');
+    b1.classList.add('btn-primary');
+    b1.classList.remove('btn-dark');
+}
+    </script>
+{% endblock %}

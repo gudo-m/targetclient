@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Изменить Email</h1>
+    <div class="form-inside container">
+        <form action="" method="post">
+            {% csrf_token %}
+            <p><label>Новый Email</label></p>
+            <input class="form-control" name="new_email" type="email" placeholder="Email" required>
+            <p><label>Ваш пароль</label></p>
+            <input class="form-control"  name="password" type="password" placeholder="Пароль" required>
+            <input class="btn btn-primary" type="submit">
+        </form>
+    </div>
+{% endblock %}

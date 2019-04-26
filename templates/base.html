@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+        <!--META-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<meta name="mailru-domain" content="ODsmy90AAjGrTivL">
+
+<meta charset="UTF-8">
+	<title>TargetClient</title>
+
+    <link rel="shortcut icon" href="{% static 'main_static/img/favicon.ico' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:200,200i,300,300i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
+    <link rel="apple-touch-icon" href="{% static 'main_static/img/apple-touch-icon.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'main_static/img/apple-touch-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'main_static/img/apple-touch-icon-114x114.png' %}">
+    <!--CSS-->
+    <link rel="stylesheet" href="{% static 'main_static/libs/bootstrap/css/bootstrap.min.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'main_static/libs/bootstrap-social/bootstrap-social.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'main_static/libs/font-awesome/fontawesome.min.css' %}">
+    <!--MAIN CSS-->
+    <link rel="stylesheet" href="{% static 'main_static/css/style.css' %}">
+    {% block css %}
+    {% endblock %}
+</head>
+<body>
+
+<div class="errors">
+    {% if errors %}
+        {% for error in errors %}
+            <div class="alert alert-warning" id="error_output" role="alert">
+                {{ error }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<!-- HEADER -->
+	<header>
+		<a href="http://www.targetclient.tk/">  </a>
+
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container">
+				<a class="navbar-brand" href="/"><span class="logo-red">Target</span>Client</a>
+				<button class="navbar-toggler cmn-toggle-switch cmn-toggle-switch__htla cmn-toggle-switch__htra cmn-toggle-switch__htx cmn-toggle-switch__rot" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				    <span>toggle menu</span>
+                </button>
+				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+					<div class="navbar-nav nav-main-links">
+                        {% if user.is_authenticated %}
+                            <a class="nav-link dropdown-toggle" href="{% url 'room_main' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Личный кабинет
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% if user.settings.confirmed %}
+                                    <a class="dropdown-item" href="{% url 'room_main' %}">Профиль</a>
+                                    <a class="dropdown-item" href="{% url 'room_roots' %}">Источники</a>
+                                    <a class="dropdown-item" href="{% url 'room_clients' %}">Возможные клиенты</a>
+                                    <a class="dropdown-item" href="{% url 'room_comments' %}">Комментарии</a>
+                                    <a class="dropdown-item" href="{% url 'room_spam' %}">Рассылка сообщений</a>
+                                    <a class="dropdown-item" href="{% url 'history' %}">История действий</a>
+                                    {% if user.is_staff %}
+                                        <a class="dropdown-item" target="_blank" href="{% url 'admin:index' %}">Админка</a>
+                                    {% endif %}
+                                {% else %}
+                                    <a class="dropdown-item" href="{% url 'room_main' %}">Профиль</a>
+                                {% endif %}
+                            </div>
+						    <a class="nav-item nav-link" href="{% url 'logout' %}">Выйти ({{ user.username }})</a>
+					    {% else %}
+                            <a class="nav-item nav-link" href="{% url 'login' %}">Войти</a>
+                            <a class="nav-item nav-link" href="{% url 'register' %}">Зарегистрироваться</a>
+                        {% endif %}
+                    </div>
+				</div>
+			</div>
+		</nav>
+	</header>
+<!-- END HEADER -->
+
+
+
+<!-- CONTENT -->
+{% if index %}
+{% else %}
+    <div class="container no-index">
+{% endif %}
+{% block content %}
+{% endblock %}
+{% if index %}
+{% else %}
+    </div>
+{% endif %}
+<!-- END CONTENT -->
+
+<!-- FOOTER -->
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<h2 class="tac">О нас</h2>
+					<p>Многие ищут аудиторию, чтобы показывать им рекламу, а мы ищем потенциально заинтересованных клиентов и делаем это без Ваших затрат на рекламу, как никто другой. Новый сервис поиска клиентов - это не просто слоган, а наше реальное отличие, попробуйте и мы подружимся!</p>
+				</div>
+				<div class="col-md-4 tac">
+					<a class="navbar-brand" href="http://www.targetclient.tk/"><span class="logo-red">Target</span>Client</a>
+				</div>
+				<div class="col-md-4">
+					<h2>Контакты</h2>
+					<a href="mailto:gudo.m@yandex.ru">Почта</a>
+				</div>
+			</div>
+		</div>
+	</footer>
+<!-- END FOOTER -->
+
+<!-- JS -->
+<script src="{% static 'main_static/libs/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'main_static/libs/bootstrap/js/popper.min.js' %}"></script>
+<script src="{% static 'main_static/libs/bootstrap/js/bootstrap.min.js' %}"></script>
+<script>
+    (function() {
+
+      "use strict";
+
+      var toggles = document.querySelectorAll(".cmn-toggle-switch");
+
+      for (var i = toggles.length - 1; i >= 0; i--) {
+        var toggle = toggles[i];
+        toggleHandler(toggle);
+      };
+
+      function toggleHandler(toggle) {
+        toggle.addEventListener( "click", function(e) {
+          e.preventDefault();
+          (this.classList.contains("active") === true) ? this.classList.remove("active") : this.classList.add("active");
+        });
+      }
+
+    })();
+</script>
+{% block js %}
+{% endblock %}
+<!-- END JS -->
+
+</body>
+</html>

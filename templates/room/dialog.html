@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="dialog-top-info w-100">
+    <div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <a class="btn btn-primary dialog-back" href="{% url 'room_dialogs' vk_acc_id=vk_account.id %}">Назад</a>
+        </div>
+        <div class="col-md-8">
+            <a class="with_dialog" target="_blank" href="https://vk.com/id{{ dialog.with_uid }}"><img class="img-rounded-vk" width="50px" src="{{ dialog.with_photo }}"><span>{{ dialog.with_fname }} {{ dialog.with_lname }}</span></a>
+        </div>
+        <div class="col-md-2">
+              <div class="btn-group dropdown">
+                  <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Меню
+                  </button>
+                  <div class="dropdown-menu dialog-menu">
+                    <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">Удалить диалог</a>
+                    <a class="dropdown-item" id="to_start_dialog">В начало диалога</a>
+                    <a class="dropdown-item" id="to_end_dialog">В конец диалога</a>
+                  </div>
+                </div>
+        </div>
+    </div>
+    </div>
+    </div>
+        <div class="container">
+            <div class="row tac">
+                <div class="messages-dialog w-100" id="messages-dialog">
+                <div class="container">
+                    {% for message in messages %}
+                        <div class="w-75 message {% if message.from_vk_account %}message-from-me float-right{% else %}float-left{% endif %} flex-column align-items-start">
+                            <span class="message_text">{{ message.body }}</span>
+                            <p class="date_sended small">{{ message.sended_at }} {% if message.from_vk_account %}(Вы){% else %}({{ message.mdialog.with_fname }}){% endif %}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                </div>
+                <div class="new_message w-100 tac">
+                    <label>Новое сообщение</label>
+                    <textarea name="" id="body-message" class="form-control w-75 m-auto" required></textarea>
+                    <a class="btn btn-primary w-75 m-auto" id="send_new_message" data-id-vk-acc="{{ vk_account.id }}" data-id-dialog="{{ dialog.id }}">Отправить</a>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Удаление диалога</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="text-dark">Вы уверены, что хотите удалить диалог?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-danger" id="delete_dialog" data-id-vk-acc="{{ vk_account.id }}" data-id-dialog="{{ dialog.id }}">Удалить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+      var block = document.getElementById("messages-dialog");
+      block.scrollTop = 999999;
+      $('#to_start_dialog').click(function () {
+          var block = document.getElementById("messages-dialog");
+          block.scrollTop = 0;
+      })
+      $('#to_end_dialog').click(function () {
+          var block = document.getElementById("messages-dialog");
+          block.scrollTop = 999999;
+      })
+    </script>
+    <script src="{% static 'main_static/js/send_new_message.js' %}"></script>
+    <script src="{% static 'main_static/js/delete_dialog.js' %}"></script>
+{% endblock %}

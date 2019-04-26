@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Вход</h1>
+    <div class="form-inside container">
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <p><label>Логин</label></p>
+            <input class="form-control" name="login" type="text" placeholder="Логин">
+            <p><label>Пароль</label></p>
+            <input class="form-control"  name="password" type="password" placeholder="Пароль">
+            <input class="btn btn-primary" type="submit">
+        </form>
+    </div>
+    <p>Забыли пароль? <a href="{% url 'get_reset_password' %}">Восстановить</a></p>
+{% endblock %}

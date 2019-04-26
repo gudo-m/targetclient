@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Профиль</h1>
+
+    <div class="form-inside container">
+        <form action="" method="post">
+            {% csrf_token %}
+            <p><label>Логин</label></p>
+            <input class="form-control" type="text" name="login" value="{{ user.username }}" readonly required>
+            <p><label>Email</label></p>
+            {% if user.settings.confirmed %}
+                <input class="form-control" type="email" name="email" value="{{ user.email }} (подтверждён)" readonly required>
+            {% else %}
+
+                <div class="input-group mb-3">
+                <input class="form-control" type="email" name="email" value="{{ user.email }} (не подтверждён)" aria-describedby="basic-addon3" id="text-basic-addon3" readonly required>
+                    <div class="input-group-append">
+                        <a href="#" class="input-group-append btn btn-primary copy-input-balance" id="basic-addon3">Отправить письмо ещё раз</a>
+                    </div>
+                </div>
+            {% endif %}
+            <p><label>Дата создания аккаунта</label></p>
+            <input class="form-control" type="text" name="date" value="{{ user.date_joined }} (по МСК)" readonly required>
+            <div class="change-buttons">
+                <a class="btn btn-primary" href="{% url 'edit_password' %}">Изменить пароль</a>
+                <a class="btn btn-primary" href="{% url 'change_email' %}">Изменить email адрес</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script src="{% static 'main_static/js/change_perm.js' %}"></script>
+    <script src="{% static 'main_static/js/send_email_again.js' %}"></script>
+    <script src="{% static 'main_static/js/confirm_promocode.js' %}"></script>
+{% endblock %}

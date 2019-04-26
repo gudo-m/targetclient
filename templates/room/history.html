@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Мои действия</h1>
+    <div class="bs-callout bs-callout-info">
+      <h4>Информация</h4>
+      Здесь выводятся 100 последних действий вашего аккаунта. Время указано по МСК.
+    </div>
+
+    <div class="container">
+        <div class="row tac">
+            {% if actions %}
+                    <table class="table table-hover table-sm table-dark table-responsive">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Название</th>
+                          <th scope="col">Дата</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for action in actions %}
+                        <tr>
+                          <th scope="row">{{ action.id }}</th>
+                          <td>{{ action.type.name }}</td>
+                          <td>{{ action.happened }}</td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+            {% else %}
+                <div class="alert alert-warning mx-auto not-found-room" role="alert">
+                    <h2>Действий не найдено</h2>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Диалоги аккаунта вконтакте <a href="https://vk.com/id{{ vk_account.aid }}" target="_blank">{{ vk_account.fname }} {{ vk_account.lname }}</a></h1>
+    <a class="btn btn-primary" href="{% url 'room_spam' %}">
+        Назад
+    </a>
+    <div class="bs-callout bs-callout-info">
+      <h4>Информация</h4>
+        Новые сообщения появляются не сразу, но при блокировке аккаунта все сообщения остаются.
+    </div>
+        <div class="container">
+            <div class="row tac">
+                <ul class="list-group list-group-dialogs w-100">
+                    {% for dialog in dialogs_info %}
+                        <li class="list-group-item list-group-item-action flex-column align-items-start" onclick="window.open('http://www.targetclient.tk/room/dialogs/{{ vk_account.id }}/dialog{{ dialog.id }}','_self')">
+                                <div class="w-100 list-group-content justify-content-between">
+                                    <a href="https://vk.com/id{{ dialog.with_uid }}" class="dialogs-user" target="_blank"><img class="img-rounded-vk" width="30%" src="{{ dialog.with_photo }}"><span class="dialogs-dialog-name">{{ dialog.with_fname }} {{ dialog.with_lname }}</span></a>
+                                    <span class="last-message-dialogs">{% if dialog.last_message.from_vk_account %}Вы: {% else %}{{ dialog.with_fname }}: {% endif %}{{ dialog.last_message.body }}</span>
+                                    <span class="badge badge-primary badge-pill dialogs-num-mess">{{ dialog.num_messages }}</span>
+                                </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            <div class="container">
+							<div class="row">
+								                                <div class="table-responsive">
+                                  <table class="table table-pagination">
+                                      <td>
+                                        <div class="pagin-div large-3 large-offset-5 columns">
+                                            <ul class="pagination">
+                                            <div class="pagination-div">
+                                                {% if dialogs.has_previous %}
+                                                <li class="page-item arrow"><a class="page-link" href="{% url 'room_dialogs'  vk_acc_id=vk_account.id page_num=dialogs.previous_page_number %}">&laquo;</a></li>
+                                                {% else %}
+                                                <li class="page-item arrow disabled"><a class="page-link" href="">&laquo;</a></li>
+                                                {% endif %}
+                                                {% for page in dialogs.paginator.page_range %}
+                                                {% if page == dialogs.number %}
+                                                <li class="page-item active"><a class="page-link" href="{% url 'room_dialogs'  vk_acc_id=vk_account.id page_num=page%}">{{ page }}</a></li>
+                                                {% else %}
+                                                <li class="page-item"><a class="page-link" href="{% url 'room_dialogs'  vk_acc_id=vk_account.id page_num=page %}">{{ page }}</a></li>
+                                                {% endif %}
+                                                {% endfor %}
+                                                {% if dialogs.has_next %}
+                                                <li class="page-item arrow"><a class="page-link" href="{% url 'room_dialogs' vk_acc_id=vk_account.id page_num=dialogs.next_page_number %}">&raquo;</a></li>
+                                                {% else %}
+                                                <li class="page-item arrow disabled"><a class="page-link" href="">&raquo;</a></li>
+                                                {% endif %}
+                                            </div>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </table>
+                            </div>
+							</div>
+						</div>
+
+            </div>
+        </div>
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}

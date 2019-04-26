@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1>Источники</h1>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+	Добавить источник
+</button>
+    <div class="bs-callout bs-callout-info">
+      <h4>Информация</h4>
+      Чтобы нашей системе было проще определять возможных клиентов, добавьте несколько групп схожей тематики.
+        <p>Длительность процесса добавления источников зависит от кол-ва подписчиков добавляемой группы и может варьироваться от нескольких секунд до нескольких часов.</p>
+    </div>
+    <div class="bs-callout bs-callout-info">
+      <h4>Информация</h4>
+      Если в течении суток у вас не появляются возможные клиенты (при том, что у вас есть источники), то можете воспользоваться проверкой "вне очереди". Ваши источники начнут проверяться прямо сейчас. По мере выполнения процесса вам будут присланы письма на привязанную почту.
+        <p><a id="check_root" class="btn btn-primary text-white">Проверить источники "вне очереди"</a></p>
+    </div>
+<div class="container">
+	<div class="container">
+		<div class="container">
+			<div class="container">
+				<div class="container">
+					<div class="row tac">
+						{% if groups %}
+						{% for group in groups %}
+						<div class="col-md-12 card card-rootss" id="{{ group.group_id }}">
+							<div class="card-body">
+											<div class="row card-body-row-roots">
+												<div class="cl-group group-cl col-lg-6 col-md-12 col-sm-12 col-xs-12">
+													<a href="https://vk.com/club{{ group.group_id }}" target="_blank">
+														<img class="card-groups" src="{{ group.image }}" alt="">
+														<span class="card-groups text-black-50 small">{{ group.title }}</span>
+													</a>
+												</div>
+												<div class="cl-members group-cl col-lg-4 col-md-6 col-sm-6 col-xs-12 d-flex align-items-center">
+													<span class="card-groups text-black-50">Участников: {{ group.num_members }}</span>
+													<span class="spanvmiddle"></span>
+												</div>
+												<div class="cl-btn-delete group-cl col-lg-2 col-md-6 col-sm-6 col-xs-12 d-flex align-items-center">
+													<a class="btn btn-danger group-cl-btn delete_group" data-gid="{{ group.group_id }}">Удалить</a>
+												</div>
+											</div>
+							</div>
+						</div>
+						{% endfor %}
+
+
+						<div class="container">
+							<div class="row">
+                                <div class="table-responsive">
+                                  <table class="table table-pagination">
+                                      <td>
+                                        <div class="pagin-div large-3 large-offset-5 columns">
+                                            <ul class="pagination">
+                                            <div class="pagination-div">
+                                                {% if groups.has_previous %}
+                                                <li class="page-item arrow"><a class="page-link" href="{% url 'room_roots' page_num=groups.previous_page_number %}">&laquo;</a></li>
+                                                {% else %}
+                                                <li class="page-item arrow disabled"><a class="page-link" href="">&laquo;</a></li>
+                                                {% endif %}
+                                                {% for page in groups.paginator.page_range %}
+                                                {% if page == groups.number %}
+                                                <li class="page-item active"><a class="page-link" href="{% url 'room_roots' page_num=page%}">{{ page }}</a></li>
+                                                {% else %}
+                                                <li class="page-item"><a class="page-link" href="{% url 'room_roots' page_num=page %}">{{ page }}</a></li>
+                                                {% endif %}
+                                                {% endfor %}
+                                                {% if groups.has_next %}
+                                                <li class="page-item arrow"><a class="page-link" href="{% url 'room_roots' page_num=groups.next_page_number %}">&raquo;</a></li>
+                                                {% else %}
+                                                <li class="page-item arrow disabled"><a class="page-link" href="">&raquo;</a></li>
+                                                {% endif %}
+                                            </div>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </table>
+                            </div>
+							</div>
+						</div>
+							{% else %}
+							<div class="alert alert-warning mx-auto not-found-room" role="alert">
+								<h2>Источников не найдено</h2>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Добавить источник</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<label>Введите ссылки на группы</label>
+                    <textarea id="group_id" name="group_id" required class="form-control" rows="10" cols="10" placeholder="Вставьте сюда список ссылок на интересующие источники. Каждая новая ссылка с новой строки, примерно вот так:
+https://vk.com/club12312
+http://vk.com/my_best_club
+vk.com/club465715"></textarea>
+					<input type="button" class="btn btn-secondary" data-dismiss="modal" value="Отмена">
+					<input type="submit" class="btn btn-primary" id="add_group" value="Добавить">
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endblock %}
+
+	{% block js %}
+	<script src="{% static 'main_static/js/add_root.js' %}"></script>
+	<script src="{% static 'main_static/js/delete_root.js' %}"></script>
+	<script src="{% static 'main_static/js/check_root.js' %}"></script>
+	{% endblock %}

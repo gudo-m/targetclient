@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1>Возможные клиенты</h1>
+<div class="bs-callout bs-callout-info">
+  <h4>Информация</h4>
+  Возможные клиенты появятся здесь после проверки источников. Проверка занимает длительное время, но вы в это время можете заниматься чем-то другим, об окончании мы сообщим вам по почте.
+</div>
+    <div class="bs-callout bs-callout-info">
+  <h4>Информация</h4>
+  При переходе по клиенту, цвет его ФИ становится красноватого оттенка.
+    </div>
+<div class="container">
+    <div class="container">
+        <div class="container">
+            <div class="container">
+                <div class="container">
+                    <div class="row tac">
+                        {% if clients %}
+                        {% for client in clients %}
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 card card-m-b card-m-clients" id="{{ client.group.group_id }}-{{ client.client_id }}">
+                            <div class="card-header text-muted">
+                                <a href="https://vk.com/id{{ client.client_id }}" class="{% if client.visited %}{% else %}visit_client{% endif %}" data-cid="{{ client.id }}" target="_blank">
+                                    <img class="img-rounded-vk" src="{{ client.photo }}" alt="Client Photo">
+                                    <p class="card-groups {% if client.visited %}visited-client{% else %} text-black-50{% endif %} small" data-for-search="{{ client.id }}">{{ client.fname }} {{ client.lname }}</p>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-12 client-cl client-card-group">
+                                            <a href="https://vk.com/club{{ client.group.group_id }}" target="_blank">
+                                                <span>Группа: {{ client.group.title }}</span>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <a class="btn btn-info m-auto client-cl-btns-mg client-cl-btn copy-to-buffer-text {% if client.visited %}{% else %}visit_client{% endif %}" data-cid="{{ client.id }}" href="https://vk.com/im?sel={{ client.client_id }}" data-text-copy="{{ client.id }}" target="_blank">Перейти к диалогу<br>и скопировать текст</a>
+                                        </div>
+                                        <div class="client-cl col-lg-6 client-cl-btns-mg col-md-12 col-sm-12 col-xs-12">
+                                            {% if client.selected %}
+                                            <a class="btn btn-dark m-auto client-cl-btn select_client select_client" data-gid="{{ client.client_id }}">Выбрано</a>
+                                            {% else %}
+                                            <a class="btn btn-primary m-auto client-cl-btn select_client select_client" data-gid="{{ client.client_id }}">Выбрать</a>
+                                            {% endif %}
+                                        </div>
+                                        <div class="client-cl col-lg-6 client-cl-btns-mg col-md-12 col-sm-12 col-xs-12">
+                                            <a class="btn btn-danger m-auto client-cl-btn delete_client" data-uid="{{ client.client_id }}" data-gid="{{ client.group.group_id }}">Удалить</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endfor %}
+                        <div class="container">
+                            <div class="row">
+                                <div class="table-responsive">
+                                  <table class="table table-pagination">
+                                      <td>
+                                        <div class="pagin-div large-3 large-offset-5 columns">
+                                            <ul class="pagination">
+                                            <div class="pagination-div">
+                                                {% if clients.has_previous %}
+                                                <li class="page-item arrow"><a class="page-link" href="{% url 'room_clients' page_num=clients.previous_page_number %}">&laquo;</a></li>
+                                                {% else %}
+                                                <li class="page-item arrow disabled"><a class="page-link" href="">&laquo;</a></li>
+                                                {% endif %}
+                                                {% for page in clients.paginator.page_range %}
+                                                {% if page == clients.number %}
+                                                <li class="page-item active"><a class="page-link" href="{% url 'room_clients' page_num=page%}">{{ page }}</a></li>
+                                                {% else %}
+                                                <li class="page-item"><a class="page-link" href="{% url 'room_clients' page_num=page %}">{{ page }}</a></li>
+                                                {% endif %}
+                                                {% endfor %}
+                                                {% if clients.has_next %}
+                                                <li class="page-item arrow"><a class="page-link" href="{% url 'room_clients' page_num=clients.next_page_number %}">&raquo;</a></li>
+                                                {% else %}
+                                                <li class="page-item arrow disabled"><a class="page-link" href="">&raquo;</a></li>
+                                                {% endif %}
+                                            </div>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-warning mx-auto not-found-room" role="alert">
+                        <h2>Возможных клиентов не найдено</h2>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--TEXTS-->
+<div class="texts" style="height: 1px;color: transparent;cursor: default;">
+    {% for text in texts %}
+        <span id="{{ text.id }}">{{ text.msg }}</span>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script src="{% static 'main_static/js/delete_client.js' %}"></script>
+<script src="{% static 'main_static/js/select_client.js' %}"></script>
+<script src="{% static 'main_static/js/visit_client.js' %}"></script>
+
+
+<script>
+
+function CopyToClipboard(containerid) {
+    try {
+        // современный объект Selection
+        window.getSelection().removeAllRanges();
+    } catch (e) {
+        document.selection.empty();
+    }
+    if (document.selection) {
+        var range = document.body.createTextRange();
+        range.moveToElementText(document.getElementById(containerid));
+        range.select().createTextRange();
+        document.execCommand("Copy");
+    } else if (window.getSelection) {
+        var range = document.createRange();
+         range.selectNode(document.getElementById(containerid));
+         window.getSelection().addRange(range);
+         document.execCommand("Copy");
+}}
+
+$('.copy-to-buffer-text').click(function () {
+    CopyToClipboard($(this).attr("data-text-copy"));
+});
+
+
+</script>
+{% endblock %}
