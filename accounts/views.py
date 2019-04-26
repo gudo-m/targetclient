@@ -67,15 +67,15 @@ def add_action(title, char_id, user):
 def normalize_num_texts(user):
     """Нормализует колво текстов"""
     # получаем текущие текста
-    # now_texts = UserSpamText.objects.filter(user=user)
-    # # пока сейчас текстов больше, чем надо
-    # while len(now_texts) > user.settings.plan.num_texts:
-    #     # удаляем последний текст
-    #     UserSpamText.objects.filter(user=user).order_by('-id')[0].delete()
-    # # пока текстов меньше, чем надо
-    # while len(now_texts) < user.settings.plan.num_texts:
-    #     # добавляем текст
-    #     UserSpamText.objects.create(user=user)
+    now_texts = UserSpamText.objects.filter(user=user)
+    # пока сейчас текстов больше, чем надо
+    while len(now_texts) > 2:
+        # удаляем последний текст
+        UserSpamText.objects.filter(user=user).order_by('-id')[0].delete()
+    # пока текстов меньше, чем надо
+    while len(now_texts) < 2:
+        # добавляем текст
+        UserSpamText.objects.create(user=user)
     return True
 
 
