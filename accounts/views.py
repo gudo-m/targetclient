@@ -72,10 +72,12 @@ def normalize_num_texts(user):
     while len(now_texts) > 2:
         # удаляем последний текст
         UserSpamText.objects.filter(user=user).order_by('-id')[0].delete()
+        now_texts = UserSpamText.objects.filter(user=user)
     # пока текстов меньше, чем надо
     while len(now_texts) < 2:
         # добавляем текст
         UserSpamText.objects.create(user=user)
+        now_texts = UserSpamText.objects.filter(user=user)
     return True
 
 
