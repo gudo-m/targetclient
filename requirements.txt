@@ -29,6 +29,6 @@ reportlab==3.3.0
 requests==2.18.4
 requests-oauthlib==0.8.0
 requests-toolbelt==0.8.0
-urllib3==1.23
+urllib3==1.24.2
 vk==2.0.2
 whitenoise==3.3.1
