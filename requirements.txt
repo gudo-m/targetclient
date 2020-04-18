@@ -26,7 +26,7 @@ python-crontab==2.3.4
 python-dateutil==2.7.3
 pytz==2018.3
 reportlab==3.3.0
-requests==2.18.4
+requests==2.20.0
 requests-oauthlib==0.8.0
 requests-toolbelt==0.8.0
 urllib3==1.24.2
