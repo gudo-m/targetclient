@@ -1,4 +1,4 @@
-Django==2.2.10
+Django==2.2.13
 django-allauth==0.36.0
 django-appconf==1.0.2
 django-classy-tags==0.8.0
